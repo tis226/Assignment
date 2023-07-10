@@ -4,11 +4,10 @@ on: workflow_dispatch
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8"]
+        python-version: ["3.8","3.9","3.10"]
 
     steps:
       - uses: actions/checkout@v3
@@ -18,3 +17,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
+      - name: Create and write to result file
+        run: echo $(python -c "import sys; print(sys.version)") > result-${{ matrix.python-version }}.txt
+
+      - name: Upload result
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: result-${{ matrix.python-version }}.txt
+
