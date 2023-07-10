@@ -24,6 +24,6 @@ jobs:
       - name: Upload result
         uses: actions/upload-artifact@v3
         with:
-          name: artifact
+          name: Result(artifact)
           path: result-${{ matrix.python-version }}.txt
 
